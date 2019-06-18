@@ -62,7 +62,7 @@
  - 10km+ effective radius
 
 ### Shortages
- - Cost a lot for buying LoRa Gateway
+ - Cost a lot for buying LoRa Gateway (￥1000)
  - Few Community Support
  - Hard to purchase in market
 
@@ -167,7 +167,11 @@
 
 # Comparation
 
-Plan | Cost | Purchase | Energy Consumption | Community | Communication Quality | Effective Radius | History Data | Web Dev
----- | ---- | ---- | --- | --- | --- | --- | --- | --- | ---
-WIFI1 | Low | Easy | Low (Deep Sleep) | Big | Unknown | Small | Support | Support
-LoRa1 | Relativly High | Hard | Very Low | Small | Good | 10+km | Support | Support
+Plan | Cost | Purchase | Energy Consumption | Community | Communication Quality | Effective Radius | History Data | Safety | intranet MQTT | Network Complexity | Access from Internet |
+---- | ---- | ---- | --- | --- | --- | --- | --- | --- | --- | --- |
+WIFI1 | Low | Easy | Low (Deep Sleep) | Big | Unknown | unknown | Support | Good | Support | 5 | Support |
+LoRa1 | Relativly High | Hard | Very Low | Small | Good | 10+km | Support | Perfect | Support | 3 | Support |
+WIFI2 | Low | Easy | Low (Deep Sleep) | Big | Unknown | ok | Support | Good | Support | 4 | Support |
+WIFI3 | Low | Easy | Low (Deep Sleep) | Big | Unknown | ok | Support | Good | Support | 4 | Support |
+WIFI4 | Low | Easy | Low (Deep Sleep) | Big | Unknown | unknown | Support | Good | No | 4 | Support |
+WIFI5 | Low | Easy | Low (Deep Sleep) | Big | Unknown | unknown | Support | Good | Support | 4 | Support |
