@@ -1,6 +1,16 @@
 # surf-iots
 Sharing and Record for surf..
 
+## Design Objetives
+
+ - Available
+ - Relabile
+
+## Challenges
+
+ - Waterproof
+ - Low Power
+
 ## Reading Materials
 
 ### MQTT
@@ -12,12 +22,12 @@ Sharing and Record for surf..
 
 ### LPWA
 
- - []()
+ - [loraserver](https://www.loraserver.io/)
 
 
 ### MCU
 
-
+- []()
 
 
 ### Sensors
