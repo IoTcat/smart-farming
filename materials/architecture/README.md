@@ -167,11 +167,11 @@
 
 # Comparation
 
-Plan | Cost | Purchase | Energy Consumption | Community | Communication Quality | Effective Radius | History Data | Safety | intranet MQTT | Network Complexity | Access from Internet |
----- | ---- | ---- | --- | --- | --- | --- | --- | --- | --- | --- |
-WIFI1 | Low | Easy | Low (Deep Sleep) | Big | Unknown | unknown | Support | Good | Support | 5 | Support |
-LoRa1 | Relativly High | Hard | Very Low | Small | Good | 10+km | Support | Perfect | Support | 3 | Support |
-WIFI2 | Low | Easy | Low (Deep Sleep) | Big | Unknown | ok | Support | Good | Support | 4 | Support |
-WIFI3 | Low | Easy | Low (Deep Sleep) | Big | Unknown | ok | Support | Good | Support | 4 | Support |
-WIFI4 | Low | Easy | Low (Deep Sleep) | Big | Unknown | unknown | Support | Good | No | 4 | Support |
-WIFI5 | Low | Easy | Low (Deep Sleep) | Big | Unknown | unknown | Support | Good | Support | 4 | Support |
+| Plan | Cost | Purchase | Energy Consumption | Community | Communication Quality | Effective Radius | History Data | Safety | intranet MQTT | Network Complexity | Access from Internet |
+| :----: | :----: | :-----: | :----: | :----: | :----: | :----: | :----: | :----: | :----: | :----: | :---: |
+| WIFI1 | Low | Easy | Low (Deep Sleep) | Big | Unknown | unknown | Support | Good | Support | 5 | Support |
+| LoRa1 | Relativly High | Hard | Very Low | Small | Good | 10+km | Support | Perfect | Support | 3 | Support |
+| WIFI2 | Low | Easy | Low (Deep Sleep) | Big | Unknown | ok | Support | Good | Support | 4 | Support |
+| WIFI3 | Low | Easy | Low (Deep Sleep) | Big | Unknown | ok | Support | Good | Support | 4 | Support |
+| WIFI4 | Low | Easy | Low (Deep Sleep) | Big | Unknown | unknown | Support | Good | Not | 4 | Support |
+| WIFI5 | Low | Easy | Low (Deep Sleep) | Big | Unknown | unknown | Support | Good | Support | 4 | Not |
