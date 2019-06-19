@@ -11,7 +11,7 @@
  - VPS
  - NodeMCU
  - WiFi Router
- - ESP8266 / D1 MINI / NodeMCU
+ - ESP8266 /ESP-01/ D1 MINI / NodeMCU
 
 ### Features
  - Provide HTTP and Websocket API (Easy for App and Website Dev)
@@ -77,7 +77,7 @@
  - VPS
  - NodeMCU
  - WiFi Router
- - ESP8266 / D1 MINI / NodeMCU
+ - ESP8266 / ESP-01 / D1 MINI / NodeMCU
 
 ### Features
  - Ground Sensor Network works as chains
@@ -102,7 +102,7 @@
  - VPS
  - NodeMCU
  - WiFi Router
- - ESP8266 / D1 MINI / NodeMCU
+ - ESP8266 / ESP-01 / D1 MINI / NodeMCU
 
 ### Features
  - Ground Sensor Network works as branch
@@ -125,7 +125,7 @@
  - VPS
  - NodeMCU
  - WiFi Router
- - ESP8266 / D1 MINI / NodeMCU
+ - ESP8266 / ESP-01 / D1 MINI / NodeMCU
 
 ### Features
  - NodeMCU directly connect to a MQTT Cloud Server
@@ -150,7 +150,7 @@
  - Raspberry Pi
  - NodeMCU
  - WiFi Router
- - ESP8266 / D1 MINI / NodeMCU
+ - ESP8266 / ESP-01 / D1 MINI / NodeMCU
 
 ### Features
  - All devices Local
