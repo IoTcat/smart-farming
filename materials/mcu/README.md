@@ -12,9 +12,9 @@
 | :--: | :---: | :---: | :---: | :---: |
 | **Packaging** | chip | plug-in | board | board |
 | **Cost** | ￥3.5 | ￥9.4 | ￥15.8 | ￥22 |
-| **Pins** | 14GPIO | 2GPIO+tx+rx | 9Dig+1Ana | 10Dig+1Ana |
+| **Pins** | 14GPIO | 2GPIO+tx+rx | 9Dig+1Ana | 10Dig+2Ana |
 | **Dependence** | 12R/L/C+1CRY+1SPI Flash | LD1117/AMS1117 | - | - |
-| **Power Supply** | 2.5V-3.6V(Const) | 3.3V(Const) | 3.3V/5V/MicroUSB | 3.3V/5V/MicroUSB |
+| **Power Supply** | 2.5V-3.6V(Const) | 3.3V(Const) | 5V/MicroUSB | 4.5V-10V/MicroUSB |
 | **Flash** | - | 512K/1M | 4M | 4M |
 | **Deep Sleep** |  Good | Good | Mid | Bad |
 | **OTA** | Need Flash > 1M | - | Support | Support |
