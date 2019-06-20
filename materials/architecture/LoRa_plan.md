@@ -22,3 +22,9 @@
 ## Shortages
  - The selection of LoRa module is undetermined, hopefully we can decide it in two days after a talk with the iot company we used to study
  - Waterproof still need to be solved
+
+
+## Other Materials
+
+### Power Consumption for MCUs
+![](https://www.arduino.cn/data/attachment/forum/201704/01/135127gxjcfs69plcsxyj3.png)
