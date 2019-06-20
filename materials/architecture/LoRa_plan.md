@@ -18,7 +18,7 @@
  - Air Sensor Node Low Power
  - Simple Network Topology
  - Provide HTTP and WebSocket API, Easy to support a Website/App Demo Page
- - Both the Water Pump unit and the Sensor unit are flexible to move
+ - The Sensor unit are flexible to move
  - Security and Privacy
 
 ## Shortages
