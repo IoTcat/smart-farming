@@ -82,19 +82,26 @@ on/off | 0/1
 normal mode/sleep mode | 0/2
 power consuming/charging | 0/4
 pump0 ok/error | 0/4
-battery ok/error | 0/8
+waterSwitch ok/error | 0/8
+temp/hum/airPre(sta) ok/error | 0/8
 pump1 ok/error | 0/8
-waterSwitch ok/error | 0/16
-temperature sensor ok/error | 0/32
-humidity sensor ok/error | 0/64
-light sensor ok/error | 0/128
+temperature sensor ok/error | 0/16
+rainfall ok/error | 0/16
+humidity sensor ok/error | 0/32
+light sensor ok/error | 0/32
+CO sensor ok/error | 0/64
+NH3 sensor ok/error | 0/128
 
 
 Code | Status
 ----|-------
-0 | off
-1 | on
-11 | auto
+0 | on / turn on
+1 | off / turn off
+2 | on with sleep mode
+3 | off with sleep mode
+4 | on with charging
+5 | off with charging
+
 
 2 | manual Mode
 -1 | error
