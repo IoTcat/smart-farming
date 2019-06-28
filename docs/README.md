@@ -1,13 +1,32 @@
-## wIoT for NodeJ
-适用于NodeJS的wIoT服务器控制组件，轻松物联
 
-## 先觉条件
- - 拥有烧录好[wIoT固件](https://wiot.yimian.xyz/ota/get.php)的**D1 MINI**单片机
- - 一台或多台无线WiFi路由器2.4G/5G
- - 局域网内拥有一台装有**NodeJS**的服务器或电脑 (NodeJS装法非常简单, 请自行Google或百度)
- - 配置好**npm**
 
-## 快速开始
+## API
+
+
+## MQTT Subjects
+
+Subject | Description | Demo Content
+----|-------|----
+MAC | "" | 单片机的MAC地址
+pin | {D1: 0, D2: 0, D3: 0, D4: 0, D5: 0, D6: 0, D7: 0, D8: 0} | pin脚的模式, 0为INPUT, 1为OUTPUT, 2为INPUT_PULLUP 
+hint | true | 是否显示状态提示
+debug | false | 是否开启debug模式
+ip | "default" | 指定单片机IP, 请在长时间搜索不到IP时尝试此选项
+port | 8848 | Client的TCP Socket通信端口，默认8848
+ip_range | "192.168.0" | IP搜索字段，请在长时间搜索不到IP时尝试此选项
+localIP | "127.0.0.1" | 本机IP
+OTA | true | 是否自动OTA更新固件
+OnlyHTTP | false | 是否仅使用HTTP模式连接单片机
+errDelayTime | 2000 | 遇到网络错误时重试间隔时间(毫秒)
+okDelayTime | 30 | 收到网络请求后延时等待时间(毫秒)
+resetDelayTime | 4500 | 向单片机发送重置指令后多久不再发送新消息(毫秒)
+noTryMaxTime | 15000 | 经过此时间单片机仍未响应则重新发送消息(毫秒)
+IntervalTime | 2000 | 监听行为心跳间隔
+MaxToReScanTime | 180000 | 经过此事件单片机无响应则从新扫描IP地址(毫秒)
+MinResearchTime | 5000 | 搜索IP经过一此轮询后间隔时间(毫秒)
+IpScanTimeout | 1 | IP扫描时的Ping检测超时时间(秒)
+pingTimeout | 2 | 心跳Ping检测的超时时间(秒)
+MaxTraceBackTimes | 8 | 判断连接状态所向前追溯的历史心跳个数
 
 ### 单片机接入
 1. 使用MicroUSB, 5V, 或3V pin脚给单片机供电
