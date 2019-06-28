@@ -3,7 +3,7 @@
 
 ## System Architecture
 
-![](./.img/nearPLAN.png)
+![](../materials/architecture/.img/nearPLAN.png)
 
 ### Objectives
  - Available
