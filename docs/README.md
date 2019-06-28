@@ -1,4 +1,4 @@
-## wIoT for NodeJS
+## wIoT for NodeJ
 适用于NodeJS的wIoT服务器控制组件，轻松物联
 
 ## 先觉条件
