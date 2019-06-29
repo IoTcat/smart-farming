@@ -1,24 +1,18 @@
 const langs = [
-    { title: '简体中文', path: '/home', matchPath: /^\/(home|ecosystem|support)/ },
-    { title: 'English', path: '/en/', matchPath: /^\/en/ },
+    { title: 'English', path: '/home', matchPath: /^\/(home|ecosystem|support)/ },
+    { title: '简体中文', path: '/en/', matchPath: /^\/en/ },
 ];
 
 docute.init({
     landing: 'landing.html',
-    title: 'wIoT',
-    repo: 'iotcat/wIoT',
+    title: 'Smart Farming',
+    repo: 'iotcat/smart-farming',
     twitter: 'iotcat',
-    'edit-link': 'https://github.com/IoTcat/wIoT/blob/master/docs/',
+    'edit-link': 'https://github.com/IoTcat/smart-farming/blob/master/docs/',
     nav: {
         default: [
             {
                 title: 'Home', path: '/home'
-            },
-            {
-                title: 'Ecosystem', path: '/ecosystem'
-            },
-            {
-                title: 'Support wIoT', path: '/support'
             },
             {
                 title: 'Languages', type: 'dropdown', items: langs
@@ -27,12 +21,6 @@ docute.init({
         'zh-Hans': [
             {
                 title: '首页', path: '/en/'
-            },
-            {
-                title: '生态', path: '/en/ecosystem'
-            },
-            {
-                title: '支持 wIoT', path: '/en/support'
             },
             {
                 title: '选择语言', type: 'dropdown', items: langs
