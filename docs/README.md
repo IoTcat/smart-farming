@@ -1,10 +1,13 @@
 # Smart Farming @surf
 
 
+## MQTT
 
-## MQTT Subjects
-
-### Structure
+### MQTT Server
+ - +`mqtt://mqtt.yimian.xyz:30031`: mqtt port with no SSL. (Normally Closed)
+ - +`mqtts://mqtt.yimian.xyz:30032`: mqtt port with SSL. (Recommended)
+ 
+### MQTT Subject Structure
 ````
 |
 |---res
@@ -101,7 +104,9 @@ Code | Status
 4 | on with charging
 5 | off with charging
 
-### Subjects Distribution
+
+
+### MQTT Action for Devices
 
 **Node0**    
 
@@ -114,8 +119,8 @@ res/node0/temperature | publish | temperature measured | 28
 res/node0/humidity | publish | humidity measured | 66.6
 ctl/node0/waterSwitch | subscribe | control waterSwitch | 0 (turn on)
 ctl/node0/status | subscribe | run MCU at certain status | 4 (charging)
-qos/sync | subscribe | receive the qos package | 2018 (random key)
-qos/node0 | publish | send back the qos package | 2018
+qos/sync | subscribe | receive the qos package | 218 (random key)
+qos/node0 | publish | send back the qos package | 218 (return the recived key, or return -1)
 
 
 **Node1**    
@@ -129,8 +134,8 @@ res/node1/temperature | publish | temperature measured | 28
 res/node1/humidity | publish | humidity measured | 66.6
 ctl/node1/waterSwitch | subscribe | control waterSwitch | 0 (turn on)
 ctl/node1/status | subscribe | run MCU at certain status | 4 (charging)
-qos/sync | subscribe | receive the qos package | 2018 (random key)
-qos/node1 | publish | send back the qos package | 2018
+qos/sync | subscribe | receive the qos package | 148 (random key)
+qos/node1 | publish | send back the qos package | 148 (return the recived key, or return -1)
 
 
 **Station**    
@@ -147,8 +152,8 @@ res/station/CO | publish | CO measured | 189
 res/station/NH3 | publish | NH3 measured | 674
 res/station/airPressure | publish | airPressure measured | 743.18
 ctl/station/status | subscribe | run MCU at certain status | 4 (charging)
-qos/sync | subscribe | receive the qos package | 2018 (random key)
-qos/station | publish | send back the qos package | 2018
+qos/sync | subscribe | receive the qos package | 148 (random key)
+qos/station | publish | send back the qos package | 148 (return the recived key, or return -1)
 
 
 **waterSys**    
@@ -161,10 +166,223 @@ res/waterSys/pump1 | publish | pump1 status | 0 (on)
 ctl/waterSys/status | subscribe | run MCU at certain status | 0 (on)
 ctl/waterSys/pump0 | subscribe | change pump0 status | 0 (on)
 ctl/waterSys/pump1 | subscribe | change pump1 status | 1 (off)
-qos/sync | subscribe | receive the qos package | 2018 (random key)
-qos/waterSys | publish | send back the qos package | 2018
+qos/sync | subscribe | receive the qos package | 148 (random key)
+qos/waterSys | publish | send back the qos package | 148 (return the recived key, or return -1)
 
 
 
-## API
+## API - HTTP
 
+### HTTP Server
+ - +`http://smartfarm.yimian.xyz/api`: Http API url (unsafe, will be redirected to https)
+ - +`https://smartfarm.yimian.xyz/api`: Https API url (Recommended)
+ 
+### /get
+
+**Parameters**    
+
+Param | Type | Description | Priority | Demo
+:--:|:--:|:--:|:--:|:--:
+**type** | string | target tag <station/waterSys/node> | 1 | station
+sid | number | soil number <0/1>| 2 | 0
+num | number | num of last items to get (default: 1) | 3, 5(default) | 15
+timestart | timestamp | search start time (exclude num) | 4 | 1562036854
+timeend | timestamp | search end time (exclude num) | 4 | 1562036966
+
+**Return Parameters**    
+
+Param | Type | Description | Demo
+:--:|:--:|:--:|:--:
+**code** | number | operation status code | 200 
+**msg** | string | status message | "Found 2 items!!"
+data | array | the objects of items | {}
+
+**Data Content - station**     
+
+name|type|description
+--|:--:|:--:
+light|Number|Data of luminosity，范围为1-65535，精度为0.01
+humidity|number|Data of humidity，范围为1-100，精度为0.008
+temperature|number|Data of temperature，范围为（-）40-85，精度为0.01
+rainfall|number|Data of rainfall，范围为0-750，精度为1
+co|number|Data of CO concentration，范围为10-1000，精度为1
+nh3|number|Data of NH3 concentration，范围为10-1000，精度为1
+airpressure|number|Data of air pressure，范围为300-1100，精度为0.18
+batterylevel|number|Left energy of whether station battery，范围为0-100，精度为1
+timestamp|number|timestamp
+datetime|string|datetime format of the timestamp
+status|number| device status code
+qos| delay (ms)
+
+**Data Content - node**     
+
+name|type|description
+--|:--:|:--:
+tid|number|item id (unique)
+id|number|soil id (sid)
+humidity|number|Data of soil humidity，范围为0-100，精度为1
+temperature|number|Data of soil temperature，范围为（-）55-180，精度为0.6
+~~healthCondition~~|~~boolean~~|~~False:Healthy<br>True:Sick~~
+waterswitch|number|1:Not watering<br>0:Watering
+batterylevel|number|Left energy of field battery，范围为0-100，精度为1
+timestamp|number|timestamp
+datetime|string|datetime format of the timestamp
+status|number| device status code
+qos| delay (ms)
+
+**Data Content - waterSys**     
+
+name|type|description
+--|:--:|:--:
+timestamp|number|timestamp
+datetime|string|datetime format of the timestamp
+status|number| device status code
+qos| delay (ms)
+pump0 | number | pump status <0:watering/1:close>
+pump1 | number | pump status <0:watering/1:close>
+
+**Example - get last station data**    
+ - +`url`: [https://smartfarm.yimian.xyz/api/get?type=station](https://smartfarm.yimian.xyz/api/get?type=station)
+ - +`Return Value`:
+ ```js
+ {
+  "code": 200,
+  "msg": "Found 1 items!!",
+  "data": [
+    {
+      "timestamp": 1562040864,
+      "status": 0,
+      "qos": 42,
+      "batterylevel": 95,
+      "light": 32.75,
+      "temperature": 94.83,
+      "humidity": 21.151,
+      "rainfall": 22,
+      "co": 57,
+      "nh3": 7,
+      "airpressure": 65.28,
+      "datetime": "2019-07-02 12:14:24"
+    }
+  ]
+}
+ 
+ ```
+
+
+**Example - get last 3 node1 data**    
+ - +`url`: [https://smartfarm.yimian.xyz/api/get?type=node&sid=1&num=5](https://smartfarm.yimian.xyz/api/get?type=node&sid=1&num=5)
+ - +`Return Value`:
+ ```js
+{
+  "code": 200,
+  "msg": "Found 2 items!!",
+  "data": [
+    {
+      "tid": 16115,
+      "timestamp": 1562041014,
+      "id": 1,
+      "status": 0,
+      "qos": 41,
+      "batterylevel": 92,
+      "waterswitch": 1,
+      "temperature": 79,
+      "humidity": 97.1,
+      "datetime": "2019-07-02 12:16:54"
+    },
+    {
+      "tid": 16113,
+      "timestamp": 1562040964,
+      "id": 1,
+      "status": 0,
+      "qos": 40,
+      "batterylevel": 92,
+      "waterswitch": 1,
+      "temperature": 0,
+      "humidity": 90.9,
+      "datetime": "2019-07-02 12:16:04"
+    }
+  ]
+}
+ 
+ ```
+
+**Example - get waterSys data between timestamps**    
+ - +`url`: [https://smartfarm.yimian.xyz/api/get?type=waterSys&timestart=1562041304&timeend=1562041380](https://smartfarm.yimian.xyz/api/get?type=waterSys&timestart=1562041304&timeend=1562041380)
+ - +`Return Value`:
+ ```js
+{
+  "code": 200,
+  "msg": "Found 2 items!!",
+  "data": [
+    {
+      "timestamp": 1562041314,
+      "status": 0,
+      "qos": 41,
+      "pump0": 0,
+      "pump1": 0,
+      "datetime": "2019-07-02 12:21:54"
+    },
+    {
+      "timestamp": 1562041364,
+      "status": 0,
+      "qos": 44,
+      "pump0": 1,
+      "pump1": 1,
+      "datetime": "2019-07-02 12:22:44"
+    }
+  ]
+}
+ 
+ ```
+ ### /set
+
+**Parameters**    
+
+Param | Type | Description | Priority | Demo
+:--:|:--:|:--:|:--:|:--:
+**status** | number | command code | 1 | 0
+type | string | select device to change status <br/>if node, a sid is required | 2 | 4 
+sid | number |  if type not defined, this will control the waterswitch<br/>otherwise, this will control the device status | 3 | 0
+pid | number | pump id <0/1>| 4 | 0
+
+
+**Return Parameters**    
+
+Param | Type | Description | Demo
+:--:|:--:|:--:|:--:
+**code** | number | operation status code | 200 
+**msg** | string | status message | "Command published successfully!!"
+
+
+**Example - open node0 waterSwitch**    
+ - +`url`: [https://smartfarm.yimian.xyz/api/set?sid=0&status=0](https://smartfarm.yimian.xyz/api/set?sid=0&status=0)
+ - +`Return Value`:
+ ```js
+{
+  "code": 200,
+  "msg": "Command published successfully!!"
+}
+ 
+ ```
+ 
+**Example - charging node1**    
+ - +`url`: [https://smartfarm.yimian.xyz/api/set?type=node&sid=1&status=4](https://smartfarm.yimian.xyz/api/set?type=node&sid=1&status=4)
+ - +`Return Value`:
+ ```js
+{
+  "code": 200,
+  "msg": "Command published successfully!!"
+}
+ 
+ ```
+ 
+ **Example - close pump1**    
+ - +`url`: [https://smartfarm.yimian.xyz/api/set?pid=1&status=1](https://smartfarm.yimian.xyz/api/set?pid=1&status=1)
+ - +`Return Value`:
+ ```js
+{
+  "code": 200,
+  "msg": "Command published successfully!!"
+}
+ 
+ ```
