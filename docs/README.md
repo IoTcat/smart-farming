@@ -422,6 +422,7 @@ Param | Type | Description | Demo
 **Data Content**     
  - Sensor data types please reffer the API-HTTP section
  - Other data types
+ 
 name|type|description
 --|:--:|:--:
 type|string|tag of the sender
