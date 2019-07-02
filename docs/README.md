@@ -212,7 +212,7 @@ batterylevel|number|Left energy of whether station battery，范围为0-100，�
 timestamp|number|timestamp
 datetime|string|datetime format of the timestamp
 status|number| device status code
-qos| delay (ms)
+qos| number | delay (ms)
 
 **Data Content - node**     
 
@@ -228,7 +228,7 @@ batterylevel|number|Left energy of field battery，范围为0-100，精度为1
 timestamp|number|timestamp
 datetime|string|datetime format of the timestamp
 status|number| device status code
-qos| delay (ms)
+qos| number | delay (ms)
 
 **Data Content - waterSys**     
 
@@ -237,7 +237,7 @@ name|type|description
 timestamp|number|timestamp
 datetime|string|datetime format of the timestamp
 status|number| device status code
-qos| delay (ms)
+qos| number | delay (ms)
 pump0 | number | pump status <0:watering/1:close>
 pump1 | number | pump status <0:watering/1:close>
 
@@ -386,3 +386,101 @@ Param | Type | Description | Demo
 }
  
  ```
+ ### /refresh
+ - Collect data from all devices instantly.
+ - inherit all methods from the `/get`
+
+**Return Parameters**    
+
+Param | Type | Description | Demo
+:--:|:--:|:--:|:--:
+**code** | number | operation status code | 220 
+**msg** | string | status message | "Refresh command published successfully!!"
+
+
+**Example - refresh**    
+ - +`url`: [https://smartfarm.yimian.xyz/api/refresh](https://smartfarm.yimian.xyz/api/refresh)
+ - +`Return Value`:
+ ```js
+{
+ "code": 220,
+ "msg": "Refresh command published successfully!!",
+ "data": []
+}
+ 
+ ```
+ 
+ ## API - WebSocket
+ 
+### WebSocket Server
+ - +`ws://smartfarm.yimian.xyz/ws`: Websocket API url (unsafe, will be redirected to wss)
+ - +`wss://smartfarm.yimian.xyz/ws`: Websocket SSL API url (Recommended)
+ 
+### Return Message
+ - when there is a new data, websocket will send it to client
+
+**Data Content**     
+ - Sensor data types please reffer the API-HTTP section
+ - Other data types
+name|type|description
+--|:--:|:--:
+type|string|tag of the sender
+BeginTime|timestamp|time recived the first data
+EndTime|timestamp|time recived the last data
+status|number| device status code
+qos| number | delay (ms) 
+
+### Examples
+
+**node**    
+```js
+{
+ "type":"node1",
+ "data":{
+  "BeginTime":"1562044414358",
+  "status":"4",
+  "batteryLevel":"100",
+  "waterSwitch":"1",
+  "temperature":"80.56740131637494",
+  "humidity":"80.92740959881388",
+  "qos":"42",
+  "EndTime":"1562044414360"
+ }
+}
+```
+
+**station**
+```js
+{
+ "type":"station",
+ "data":{
+  "BeginTime":"1562044464361",
+  "status":"1",
+  "batteryLevel":"90",
+  "light":"11.782830029799985",
+  "temperature":"62.00925162058966",
+  "humidity":"92.4788961450547",
+  "rainfall":"22",
+  "CO":"65.13567362711616",
+  "NH3":"51.85498279340408",
+  "airPressure":"66.305667708908",
+  "qos":"45",
+  "EndTime":"1562044464365"
+ }
+}
+```
+
+**waterSys**   
+```js
+{
+ "type":"waterSys",
+ "data":{
+  "BeginTime":"1562044614363",
+  "status":"0",
+  "pump0":"1",
+  "pump1":"0",
+  "EndTime":"1562044614364",
+  "qos":"42"
+ }
+}
+```
