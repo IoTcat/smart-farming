@@ -416,7 +416,7 @@ Param | Type | Description | Demo
  - +`ws://smartfarm.yimian.xyz/ws`: Websocket API url (unsafe, will be redirected to wss)
  - +`wss://smartfarm.yimian.xyz/ws`: Websocket SSL API url (Recommended)
  
-### Return Message
+### Returned Message
  - when there is a new data, websocket will send it to client
 
 **Data Content**     
