@@ -1,6 +1,7 @@
 # Smart Farming @surf
 
-
+## Real-time Display Page
+[https://smartfarm.yimian.xyz](https://smartfarm.yimian.xyz)
 ## MQTT
 
 ### MQTT Server
