@@ -43,6 +43,20 @@
 
 </div>
 <script>
+/* global var */
+var page = {
+	msg: "This is a temporary page!                                       "+
+	"4 Fake Nodes are working!!                                       "+
+	"If you want to shutdown the Fake Nodes, Please let me know!!                                       "+
+	"Next official Page will be pushed out in next week!                                       "+
+	"Status Code 0 represents ok and open!!                                       "+
+	"Status Code 1 represents close!!                                       ",
+	charNum: 40,
+	interval: 4000,
+	title: document.title,
+};
+
+/* request */
 $('.refresh').attr('onClick', '$.get("https://smartfarm.yimian.xyz/api/refresh");');
 setInterval(function(){
 
@@ -157,6 +171,23 @@ setInterval(function(){
 		}
 	});
 }, 2000);
+
+/* title anime */
+function anime_title(){
+	
+	for(var i = 0; i < page.msg.length; i ++){
+		setTimeout((i)=>{
+			document.title = page.msg.substr(i, page.charNum);
+			if(i == page.msg.length - 1){
+				setTimeout(()=>{
+					document.title = page.title;
+					setTimeout(anime_title, page.interval);
+				}, 300);
+			}
+		}, i * 300, i);
+	}
+}
+setTimeout(anime_title, 4000);
 </script>
 
 </html>
