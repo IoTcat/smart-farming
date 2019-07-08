@@ -1,0 +1,162 @@
+
+<!DOCTYPE html>
+<head>
+	<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<title>Temp Page</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+   	<meta name="Keywords" content="smart farm,surf,xjtlu">
+	<meta name="Description" content="smart farming surf @xjtlu">
+<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+</head>
+	
+<body>
+<div style="margin:auto;">
+<h3>Station <span id="sta-datetime"></span></h3>
+	<h4>status: <span id="sta-status"></span>  &nbsp;&nbsp;latency: <span id="sta-qos"></span>ms  &nbsp;&nbsp;battery: <span id="sta-batterylevel"></span>%</h4>
+	<h4>light: <span id="sta-light"></span>  &nbsp;&nbsp;temperature: <span id="sta-temperature"></span>  
+	</h4><h4>humidity: <span id="sta-humidity"></span>  
+	  &nbsp;&nbsp;rainfall: <span id="sta-rainfall"></span>  &nbsp;&nbsp;CO: <span id="sta-co"></span>  
+	</h4><h4> NH3: <span id="sta-nh3"></span>  &nbsp;&nbsp;airpressure: <span id="sta-airpressure"></span></h4>
+    <button id="sta-charge">charge battery</button> <button class="refresh">refresh data</button>
+</div>
+	<HR style="border:1 dashed #987cb9" width="80%" color=#987cb9 SIZE=1></HR>
+<div style="margin:auto;">
+	<h3>Node0 <span id="node0-datetime"></span></h3>
+	<h4>status: <span id="node0-status"></span>  &nbsp;&nbsp;latency: <span id="node0-qos"></span>ms  &nbsp;&nbsp;battery: <span id="node0-batterylevel"></span>%</h4>
+	<h4>switch: <span id="node0-waterswitch"></span>  &nbsp;temperature: <span id="node0-temperature"></span> &nbsp;humidity: <span id="node0-humidity"></span></h4>
+	<button id="node0-swibtn">open switch</button> <button id="node0-charge">charge battery</button> <button class="refresh">refresh data</button>
+</div>
+	<HR style="border:1 dashed #987cb9" width="80%" color=#987cb9 SIZE=1></HR>
+<div style="margin:auto;">
+	<h3>Node1 <span id="node1-datetime"></span></h3>
+	<h4>status: <span id="node1-status"></span>  &nbsp;&nbsp;latency: <span id="node1-qos"></span>ms  &nbsp;&nbsp;battery: <span id="node1-batterylevel"></span>%</h4>
+	<h4>switch: <span id="node1-waterswitch"></span>  &nbsp;temperature: <span id="node1-temperature"></span> &nbsp;humidity: <span id="node1-humidity"></span></h4>
+	<button id="node1-swibtn">open switch</button> <button id="node1-charge">charge battery</button> <button class="refresh">refresh data</button>
+</div>
+	<HR style="border:1 dashed #987cb9" width="80%" color=#987cb9 SIZE=1></HR>
+<div style="margin:auto;">
+	<h3>waterSys <span id="waterSys-datetime"></span></h3>
+	<h4>status: <span id="waterSys-status"></span>  &nbsp;&nbsp;latency: <span id="waterSys-qos"></span>ms</h4>
+	<h4>pump0: <span id="waterSys-pump0"></span> &nbsp;&nbsp;pump1: <span id="waterSys-pump1"></span></h4>
+	<button id="waterSys-pump0btn">open pump0</button> <button id="waterSys-pump1btn">open pump1</button> <button class="refresh">refresh data</button>
+
+</div>
+<script>
+$('.refresh').attr('onClick', '$.get("https://smartfarm.yimian.xyz/api/refresh");');
+setInterval(function(){
+
+	$('span').css('color', '#980000');
+
+	$.get("https://smartfarm.yimian.xyz/api/get?type=station", function(res){
+		$('#sta-datetime').html(res.data[0].datetime);
+		$('#sta-status').html(res.data[0].status);
+		$('#sta-qos').html(res.data[0].qos);
+		$('#sta-batterylevel').html(res.data[0].batterylevel);
+		$('#sta-light').html(res.data[0].light);
+		$('#sta-temperature').html(res.data[0].temperature);
+		$('#sta-humidity').html(res.data[0].humidity);
+		$('#sta-rainfall').html(res.data[0].rainfall);
+		$('#sta-co').html(res.data[0].co);
+		$('#sta-nh3').html(res.data[0].nh3);
+		$('#sta-airpressure').html(res.data[0].airpressure);
+		if(res.data[0].status == 0) $('#sta-status').css('color', '#00FF00');
+		if(res.data[0].qos < 100) $('#sta-qos').css('color', '#00FF00');
+		else $('#sta-qos').css('color', '#FF0000');
+		if(res.data[0].batterylevel > 60) $('#sta-batterylevel').css('color', '#00FF00');
+		else $('#sta-batterylevel').css('color', '#FF0000');
+		if(res.data[0].status % 8 >= 4){
+			$('#sta-charge').html('Stop Charging');
+			$('#sta-charge').attr('onClick', '$.get("https://smartfarm.yimian.xyz/api/set?type=station&status=0");$.get("https://smartfarm.yimian.xyz/api/refresh");');
+		}else{
+			$('#sta-charge').html('Charge');
+			$('#sta-charge').attr('onClick', '$.get("https://smartfarm.yimian.xyz/api/set?type=station&status=4");$.get("https://smartfarm.yimian.xyz/api/refresh");');
+		}
+	});
+
+	$.get("https://smartfarm.yimian.xyz/api/get?type=node&sid=0", function(res){
+		$('#node0-datetime').html(res.data[0].datetime);
+		$('#node0-status').html(res.data[0].status);
+		$('#node0-qos').html(res.data[0].qos);
+		$('#node0-batterylevel').html(res.data[0].batterylevel);
+		$('#node0-waterswitch').html(res.data[0].waterswitch);
+		$('#node0-temperature').html(res.data[0].temperature);
+		$('#node0-humidity').html(res.data[0].humidity);
+		if(res.data[0].status == 0) $('#node0-status').css('color', '#00FF00');
+		if(res.data[0].qos < 100) $('#node0-qos').css('color', '#00FF00');
+		else $('#node0-qos').css('color', '#FF0000');
+		if(res.data[0].batterylevel > 60) $('#node0-batterylevel').css('color', '#00FF00');
+		else $('#node0-batterylevel').css('color', '#FF0000');
+		if(res.data[0].status % 8 >= 4){
+			$('#node0-charge').html('Stop Charging');
+			$('#node0-charge').attr('onClick', '$.get("https://smartfarm.yimian.xyz/api/set?type=node&sid=0&status=0");$.get("https://smartfarm.yimian.xyz/api/refresh");');
+		}else{
+			$('#node0-charge').html('Charge');
+			$('#node0-charge').attr('onClick', '$.get("https://smartfarm.yimian.xyz/api/set?type=node&sid=0&status=4");$.get("https://smartfarm.yimian.xyz/api/refresh");');
+		}
+		if(res.data[0].waterswitch == 0){
+			$('#node0-swibtn').html('close switch');
+			$('#node0-swibtn').attr('onClick', '$.get("https://smartfarm.yimian.xyz/api/set?sid=0&status=1");$.get("https://smartfarm.yimian.xyz/api/refresh");');
+		}else{
+			$('#node0-swibtn').html('open switch');
+			$('#node0-swibtn').attr('onClick', '$.get("https://smartfarm.yimian.xyz/api/set?sid=0&status=0");$.get("https://smartfarm.yimian.xyz/api/refresh");');
+		}
+	});
+
+	$.get("https://smartfarm.yimian.xyz/api/get?type=node&sid=1", function(res){
+		$('#node1-datetime').html(res.data[0].datetime);
+		$('#node1-status').html(res.data[0].status);
+		$('#node1-qos').html(res.data[0].qos);
+		$('#node1-batterylevel').html(res.data[0].batterylevel);
+		$('#node1-waterswitch').html(res.data[0].waterswitch);
+		$('#node1-temperature').html(res.data[0].temperature);
+		$('#node1-humidity').html(res.data[0].humidity);
+		if(res.data[0].status == 0) $('#node1-status').css('color', '#00FF00');
+		if(res.data[0].qos < 100) $('#node1-qos').css('color', '#00FF00');
+		else $('#node1-qos').css('color', '#FF0000');
+		if(res.data[0].batterylevel > 60) $('#node1-batterylevel').css('color', '#00FF00');
+		else $('#node1-batterylevel').css('color', '#FF0000');
+		if(res.data[0].status % 8 >= 4){
+			$('#node1-charge').html('Stop Charging');
+			$('#node1-charge').attr('onClick', '$.get("https://smartfarm.yimian.xyz/api/set?type=node&sid=1&status=0");$.get("https://smartfarm.yimian.xyz/api/refresh");');
+		}else{
+			$('#node1-charge').html('Charge');
+			$('#node1-charge').attr('onClick', '$.get("https://smartfarm.yimian.xyz/api/set?type=node&sid=1&status=4");$.get("https://smartfarm.yimian.xyz/api/refresh");');
+		}
+		if(res.data[0].waterswitch == 0){
+			$('#node1-swibtn').html('close switch');
+			$('#node1-swibtn').attr('onClick', '$.get("https://smartfarm.yimian.xyz/api/set?sid=1&status=1");$.get("https://smartfarm.yimian.xyz/api/refresh");');
+		}else{
+			$('#node1-swibtn').html('open switch');
+			$('#node1-swibtn').attr('onClick', '$.get("https://smartfarm.yimian.xyz/api/set?sid=1&status=0");$.get("https://smartfarm.yimian.xyz/api/refresh");');
+		}
+	});
+
+	$.get("https://smartfarm.yimian.xyz/api/get?type=waterSys", function(res){
+		$('#waterSys-datetime').html(res.data[0].datetime);
+		$('#waterSys-status').html(res.data[0].status);
+		$('#waterSys-qos').html(res.data[0].qos);
+		$('#waterSys-pump0').html(res.data[0].pump0);
+		$('#waterSys-pump1').html(res.data[0].pump1);
+		if(res.data[0].status == 0) $('#waterSys-status').css('color', '#00FF00');
+		if(res.data[0].qos < 100) $('#waterSys-qos').css('color', '#00FF00');
+		else $('#waterSys-qos').css('color', '#FF0000');
+		if(res.data[0].pump0 == 0){
+			$('#waterSys-pump0btn').html('close pump0');
+			$('#waterSys-pump0btn').attr('onClick', '$.get("https://smartfarm.yimian.xyz/api/set?pid=0&status=1");$.get("https://smartfarm.yimian.xyz/api/refresh");');
+		}else{
+			$('#waterSys-pump0btn').html('open pump0');
+			$('#waterSys-pump0btn').attr('onClick', '$.get("https://smartfarm.yimian.xyz/api/set?pid=0&status=0");$.get("https://smartfarm.yimian.xyz/api/refresh");');
+		}
+		if(res.data[0].pump1 == 0){
+			$('#waterSys-pump1btn').html('close pump1');
+			$('#waterSys-pump1btn').attr('onClick', '$.get("https://smartfarm.yimian.xyz/api/set?pid=1&status=1");$.get("https://smartfarm.yimian.xyz/api/refresh");');
+		}else{
+			$('#waterSys-pump1btn').html('open pump1');
+			$('#waterSys-pump1btn').attr('onClick', '$.get("https://smartfarm.yimian.xyz/api/set?pid=1&status=0");$.get("https://smartfarm.yimian.xyz/api/refresh");');
+		}
+	});
+}, 2000);
+</script>
+
+</html>
