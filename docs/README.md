@@ -652,3 +652,56 @@ qos| number | delay (ms)
  }
 }
 ```
+
+## Json Format via LoRa
+
+### From Station
+
+```js
+{
+      "status": 0,
+      "qos": 42,
+      "batterylevel": 95,
+      "light": 32.75,
+      "temperature": 94.83,
+      "humidity": 21.151,
+      "rainfall": 22,
+      "co": 57,
+      "nh3": 7,
+      "airpressure": 65.28
+}
+```
+
+### From Node
+
+```js
+{
+    "id": 1,   //node id, for node0 is 0, node1 is 1
+    "status": 4,
+    "qos": 42,
+    "batteryLevel": 100,
+    "waterSwitch": 1,
+    "temperature": 79,
+    "humidity": 97.1
+ }
+
+```
+
+### To Station
+
+```js
+{
+    "qos": 43,
+    "status": 0
+}
+```
+
+### To Node
+
+```js
+{
+    "qos": 43,
+    "waterSwitch": 0,
+    "status": 0
+}
+```
