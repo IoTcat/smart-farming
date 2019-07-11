@@ -659,6 +659,7 @@ qos| number | delay (ms)
 
 ```js
 {
+      "type": "station",
       "status": 0,
       "qos": 42,
       "batterylevel": 95,
@@ -676,6 +677,7 @@ qos| number | delay (ms)
 
 ```js
 {
+    "type": "node",
     "id": 1,   //node id, for node0 is 0, node1 is 1
     "status": 4,
     "qos": 42,
