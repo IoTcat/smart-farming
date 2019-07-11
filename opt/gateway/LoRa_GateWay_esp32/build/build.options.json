@@ -1,0 +1,10 @@
+{
+  "builtInLibrariesFolders": "C:\\Program Files (x86)\\Arduino\\libraries",
+  "customBuildProperties": "build.path=e:\\git\\smart-farming\\opt\\gateway\\LoRa_GateWay_esp32\\build,build.warn_data_percentage=75,runtime.tools.xtensa-esp32-elf-gcc.path=C:\\Users\\i\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\xtensa-esp32-elf-gcc\\1.22.0-80-g6c4433a-5.2.0,runtime.tools.esptool_py.path=C:\\Users\\i\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esptool_py\\2.6.1,runtime.tools.mkspiffs.path=C:\\Users\\i\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\mkspiffs\\0.2.3",
+  "fqbn": "esp32:esp32:heltec_wifi_lora_32:PSRAM=disabled,PartitionScheme=default,CPUFreq=240,FlashMode=qio,FlashFreq=40,FlashSize=4M,UploadSpeed=921600,DebugLevel=none",
+  "hardwareFolders": "C:\\Program Files (x86)\\Arduino\\hardware,C:\\Users\\i\\AppData\\Local\\Arduino15\\packages",
+  "otherLibrariesFolders": "E:\\OneDrive\\pc\\document\\Arduino\\libraries",
+  "runtime.ide.version": "10805",
+  "sketchLocation": "e:\\git\\smart-farming\\opt\\gateway\\LoRa_GateWay_esp32\\LoRa_GateWay_esp32.ino",
+  "toolsFolders": "C:\\Program Files (x86)\\Arduino\\tools-builder,C:\\Program Files (x86)\\Arduino\\hardware\\tools\\avr,C:\\Users\\i\\AppData\\Local\\Arduino15\\packages"
+}
