@@ -4,22 +4,34 @@
 #include "socket.hpp"
 
 
+
 Socket socket;
 
-#line 6 "e:\\git\\smart-farming\\opt\\node\\node0\\node0.ino"
+#line 7 "e:\\git\\smart-farming\\opt\\node\\node0\\node0.ino"
+void callback(const String& s);
+#line 11 "e:\\git\\smart-farming\\opt\\node\\node0\\node0.ino"
 void setup();
-#line 14 "e:\\git\\smart-farming\\opt\\node\\node0\\node0.ino"
+#line 19 "e:\\git\\smart-farming\\opt\\node\\node0\\node0.ino"
 void loop();
-#line 6 "e:\\git\\smart-farming\\opt\\node\\node0\\node0.ino"
+#line 7 "e:\\git\\smart-farming\\opt\\node\\node0\\node0.ino"
+void callback(const String& s){
+  Serial.println(s);
+}
+
 void setup(){
 
   Serial.begin(115200);
   socket.ini();
-
+  socket.onReceive(callback);
 }
 
 
 void loop(){
-socket.core();
+  socket.core();
+  setInterval([](){
+    socket.udp("hello socket!!!"+String(random(2000)), [](int e){
+      Serial.println("send ok"+String(random(2000)));
+    });
+  }, 7000);
 
 }

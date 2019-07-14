@@ -19,10 +19,10 @@
 #define BAND 433E6
 #endif
 #ifndef SEND_TIMES
-#define SEND_TIMES 4
+#define SEND_TIMES 8
 #endif
 #ifndef SEND_INTERVAL
-#define SEND_INTERVAL 20
+#define SEND_INTERVAL 100
 #endif
 #ifndef TCP_TIMEOUT
 #define TCP_TIMEOUT 1000
@@ -32,10 +32,9 @@
 #define DEFAULT_SERIAL 115200
 
 
-char inputByte = 1;
-
 class Socket {
    public:
+    Socket(){}
     void core();
     void ini();
     void onReceive(auto handler);
@@ -45,81 +44,69 @@ class Socket {
     };
 
    private:
-    Vector<int> udp_sendingStack;
+    static Vector<int> udp_sendingStack;
+    static String cache;
+    static void (*callback)(const String& msg);
     void LoRa_rxMode();
     void LoRa_txMode();
     void LoRa_sendMessage(const String& message);
+    static void _received(int size);
 
 };
+
+Vector<int> Socket::udp_sendingStack;
+String Socket::cache = "";
+void (*Socket::callback)(const String& msg);
 
 void Socket::ini() {
 
     if(!Serial) Serial.begin(DEFAULT_SERIAL);
 
-    LoRa.setPins(SS, RST, DI0);
+    //LoRa.setPins(SS, RST, DI0);
     if (!LoRa.begin(BAND)) {
         Serial.println("Starting LoRa failed!");
         while(true);
     }
+    LoRa.onReceive(this->_received);
 }
 
 void Socket::core() {
-    int packetSize = LoRa.parsePacket();
-    // Serial.print(packetSize);
-    if (packetSize) {
-        // received a packet
-        Serial.print("Received packet '");
 
-        // read packet
-        while (LoRa.available()) {
-            Serial.print((char)LoRa.read());
+}
+
+void Socket::_received(int size) {
+    String message = "";
+    while (LoRa.available()) {
+        message += (char)LoRa.read();
+    }
+    Serial.println("  "+message);
+    if (message == cache) return;
+    cache = message;
+    if (message.length() == 3) {
+        int pos = udp_sendingStack.Find(message.toInt());
+        if (pos != -1) {
+            udp_sendingStack.Erase(pos);
         }
-
-        // print RSSI of packet
-        Serial.print("' with RSSI ");
-        Serial.println(LoRa.packetRssi());
+        return;
     }
-
-    if (Serial.available() > 0) {
-        inputByte = Serial.read();
-
-        // package it and send off
-        // Serial.println(inputByte);
-        LoRa.beginPacket();
-        LoRa.print(" ");
-        LoRa.print(inputByte);
-        LoRa.print(" ");
-        LoRa.endPacket();
-        Serial.print("SENT!  ");
-        Serial.print(inputByte);
-        Serial.print("\n");
-        delay(200);
-        LoRa.receive();
-    }
+    (*callback)(message.substring(3));
 }
 
 void Socket::onReceive(auto handler) {
-    LoRa.onReceive([=](int packetSize) {
-        String message = "";
-        while (LoRa.available()) {
-            message += (char)LoRa.read();
-        }
-        if(message.length() == 2){
-
-        }
-        handler(message);
-    });
+     static auto f = handler;
+     this->callback = f;
 }
 
 void Socket::udp(const String& msg, auto callback) {
-    int mid = random(1000);
+    int mid = random(100, 1000);
     String s = String(mid) + msg;
     this->udp_sendingStack.PushBack(mid);
-    this->LoRa_sendMessage(s);
-    for(int i = 1; i < SEND_TIMES; i ++){
+    this->LoRa_txMode();
+    for(int i = 0; i < SEND_TIMES; i ++){
         setTimeout([=](){
             this->LoRa_sendMessage(s);
             if(i == SEND_TIMES - 1){
+                this->LoRa_rxMode();
                 callback(0);
             }
         }, i*SEND_INTERVAL);
@@ -138,11 +125,9 @@ void Socket::LoRa_txMode(){
 
 
 void Socket::LoRa_sendMessage(const String& message) {
-  this->LoRa_txMode();
   LoRa.beginPacket();
   LoRa.print(message);
   LoRa.endPacket();
-  this->LoRa_rxMode();
 }
 
 

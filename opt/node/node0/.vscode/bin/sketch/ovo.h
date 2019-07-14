@@ -35,46 +35,6 @@ void setTimeout(auto function,const int delay)
     }
 }
 
-void setTimeout(auto function,const int delay, auto param1)
-{
-    static bool on = 1;
-    if(on == 1){
-        static unsigned long startTime = millis(); 
-
-        if(millis() - startTime > delay){
-            function(param1);
-            on == 0;
-        }
-    }
-}
-void setTimeout(auto function,const int delay, auto param1, auto param2)
-{
-    static bool on = 1;
-    if(on == 1){
-        static unsigned long startTime = millis(); 
-
-        if(millis() - startTime > delay){
-            function(param1, param2);
-            on == 0;
-        }
-    }
-}
-void setTimeout(auto function,const int delay, const String param1, auto param2, int param3)
-{
-    static bool on = 1;
-    if(on == 1){
-        static unsigned long startTime = millis(); 
-
-        if(millis() - startTime > delay){
-            function(param1, param2, param3);
-            on == 0;
-        }
-    }
-}
-
-
-
-
 /**
  * Like set Interval in JS
  *
