@@ -62,7 +62,7 @@ void Socket::ini() {
 
     if(!Serial) Serial.begin(DEFAULT_SERIAL);
 
-    //LoRa.setPins(SS, RST, DI0);
+    LoRa.setPins(SS, RST, DI0);
     if (!LoRa.begin(BAND)) {
         Serial.println("Starting LoRa failed!");
         while(true);

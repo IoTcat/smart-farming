@@ -71,7 +71,9 @@ void Socket::ini() {
 }
 
 void Socket::core() {
-
+    if(LoRa.parsePacket()){
+        Serial.println("new msg in");
+    }
 }
 
 void Socket::_received(int size) {
