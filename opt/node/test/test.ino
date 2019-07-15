@@ -59,18 +59,16 @@ void loop() {
   if (packetSize) {
    gotPacket(packetSize);
   }
-    LoRa.idle();
-    delay(1000);
 
-    if(LoRa.beginPacket()){
+  setInterval([&](){
+    LoRa.beginPacket();
     LoRa.print("hello ");
     LoRa.print(counter);
     LoRa.print("  ");
     LoRa.print(aVal);
     LoRa.endPacket();
     Serial.println("sent");
-    }
-delay(3000);
+    },10000);
   
 
   //delay(500);
