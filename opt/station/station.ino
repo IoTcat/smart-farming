@@ -8,7 +8,7 @@
 //const size_t capacity = JSON_OBJECT_SIZE(15);
 //DynamicJsonDocument data(capacity);
 
-#define LORA_SOCKET_IP "1.0.0.2"
+#define LORA_SOCKET_IP "1.0.0.0"
 #include "lora-mqtt.h"
 
 LoRaMQTT mqtt;
@@ -17,6 +17,7 @@ LoRaMQTT mqtt;
 BME280 bme;
 GY30 gy;
 
+void (* resetFunc)(void) = 0;
 
 void setup() {
     uint8_t osrs_t = 1;             //Temperature oversampling x 1
@@ -36,6 +37,7 @@ void setup() {
     pinMode(A1, INPUT);
     pinMode(A3, INPUT);
     pinMode(A7, INPUT);
+
     Wire.begin();
     if (!LoRa.begin(433E6)) {
     Serial.println("Starting LoRa failed!");
@@ -49,17 +51,20 @@ void setup() {
     bme.writeReg(0xF2,ctrl_hum_reg);
     bme.writeReg(0xF4,ctrl_meas_reg);
     bme.writeReg(0xF5,config_reg);
-    bme.readTrim();   
+    bme.readTrim();
+
+    Serial.println("started..");
 }
 
 void loop() {
 
+    if(millis() > 180000) resetFunc();
     mqtt.core();
 
 }
 
 void mqttRes(String subject, String content){
-  if(subject == "qos/sync"){
+  if(subject == "qos/sync" && content.toInt()>=0 && content.toInt()<100){
     String s;
     getData(s, content);
     //data = getJson();
@@ -70,6 +75,8 @@ void mqttRes(String subject, String content){
     mqtt.publish("res/json", s);
 
   }
+    delay(1000);
+    resetFunc();
 }
 
 

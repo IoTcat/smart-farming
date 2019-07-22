@@ -18,28 +18,28 @@
 	</h4><h4>humidity: <span id="sta-humidity"></span>  
 	  &nbsp;&nbsp;rainfall: <span id="sta-rainfall"></span>  &nbsp;&nbsp;CO: <span id="sta-co"></span>  
 	</h4><h4> NH3: <span id="sta-nh3"></span>  &nbsp;&nbsp;airpressure: <span id="sta-airpressure"></span></h4>
-    <button id="sta-charge">charge battery</button> <button class="refresh">refresh data</button>
+    <button id="sta-charge">charge battery</button> <button class="refresh station">refresh data</button>
 </div>
 	<HR style="border:1 dashed #987cb9" width="80%" color=#987cb9 SIZE=1></HR>
 <div style="margin:auto;">
 	<h3>Node0 <span id="node0-datetime"></span></h3>
 	<h4>status: <span id="node0-status"></span>  &nbsp;&nbsp;latency: <span id="node0-qos"></span>ms  &nbsp;&nbsp;battery: <span id="node0-batterylevel"></span>%</h4>
 	<h4>switch: <span id="node0-waterswitch"></span>  &nbsp;temperature: <span id="node0-temperature"></span> &nbsp;humidity: <span id="node0-humidity"></span></h4>
-	<button id="node0-swibtn">open switch</button> <button id="node0-charge">charge battery</button> <button class="refresh">refresh data</button>
+	<button id="node0-swibtn">open switch</button> <button id="node0-charge">charge battery</button> <button class="refresh node0">refresh data</button>
 </div>
 	<HR style="border:1 dashed #987cb9" width="80%" color=#987cb9 SIZE=1></HR>
 <div style="margin:auto;">
 	<h3>Node1 <span id="node1-datetime"></span></h3>
 	<h4>status: <span id="node1-status"></span>  &nbsp;&nbsp;latency: <span id="node1-qos"></span>ms  &nbsp;&nbsp;battery: <span id="node1-batterylevel"></span>%</h4>
 	<h4>switch: <span id="node1-waterswitch"></span>  &nbsp;temperature: <span id="node1-temperature"></span> &nbsp;humidity: <span id="node1-humidity"></span></h4>
-	<button id="node1-swibtn">open switch</button> <button id="node1-charge">charge battery</button> <button class="refresh">refresh data</button>
+	<button id="node1-swibtn">open switch</button> <button id="node1-charge">charge battery</button> <button class="refresh node1">refresh data</button>
 </div>
 	<HR style="border:1 dashed #987cb9" width="80%" color=#987cb9 SIZE=1></HR>
 <div style="margin:auto;">
 	<h3>waterSys <span id="waterSys-datetime"></span></h3>
 	<h4>status: <span id="waterSys-status"></span>  &nbsp;&nbsp;latency: <span id="waterSys-qos"></span>ms</h4>
 	<h4>pump0: <span id="waterSys-pump0"></span> &nbsp;&nbsp;pump1: <span id="waterSys-pump1"></span></h4>
-	<button id="waterSys-pump0btn">open pump0</button> <button id="waterSys-pump1btn">open pump1</button> <button class="refresh">refresh data</button>
+	<button id="waterSys-pump0btn">open pump0</button> <button id="waterSys-pump1btn">open pump1</button> <button class="refresh waterSys">refresh data</button>
 
 </div>
 <script>
@@ -57,7 +57,10 @@ var page = {
 };
 
 /* request */
-$('.refresh').attr('onClick', '$.get("https://smartfarm.yimian.xyz/api/refresh");');
+$('.refresh.station').attr('onClick', '$.get("https://smartfarm.yimian.xyz/api/refresh?t=station");');
+$('.refresh.node0').attr('onClick', '$.get("https://smartfarm.yimian.xyz/api/refresh?t=node0");');
+$('.refresh.node1').attr('onClick', '$.get("https://smartfarm.yimian.xyz/api/refresh?t=node1");');
+$('.refresh.waterSys').attr('onClick', '$.get("https://smartfarm.yimian.xyz/api/refresh?t=waterSys");');
 setInterval(function(){
 
 	$('span').css('color', '#980000');

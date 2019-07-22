@@ -19,6 +19,7 @@ LoRaMQTT mqtt;
 BME280 bme;
 GY30 gy;
 
+void (* resetFunc)(void) = 0;
 
 void setup() {
     uint8_t osrs_t = 1; //Temperature oversampling x 1
@@ -38,6 +39,7 @@ void setup() {
     pinMode(A1, 0x0);
     pinMode(A3, 0x0);
     pinMode(A7, 0x0);
+
     Wire.begin();
     if (!LoRa.begin(433E6)) {
     Serial.println("Starting LoRa failed!");
@@ -52,16 +54,19 @@ void setup() {
     bme.writeReg(0xF4,ctrl_meas_reg);
     bme.writeReg(0xF5,config_reg);
     bme.readTrim();
+
+    Serial.println("started..");
 }
 
 void loop() {
 
+    if(millis() > 180000) resetFunc();
     mqtt.core();
 
 }
 
 void mqttRes(String subject, String content){
-  if(subject == "qos/sync"){
+  if(subject == "qos/sync" && content.toInt()>=0 && content.toInt()<100){
     String s;
     getData(s, content);
     //data = getJson();
@@ -72,6 +77,8 @@ void mqttRes(String subject, String content){
     mqtt.publish("res/json", s);
 
   }
+    delay(1000);
+    resetFunc();
 }
 
 
