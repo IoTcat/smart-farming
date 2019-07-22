@@ -1,0 +1,62 @@
+[
+  {
+    "Sourcefile": "",
+    "Include": "",
+    "Includepath": "C:\\Program Files (x86)\\Arduino\\hardware\\arduino\\avr\\cores\\arduino"
+  },
+  {
+    "Sourcefile": "",
+    "Include": "",
+    "Includepath": "C:\\Program Files (x86)\\Arduino\\hardware\\arduino\\avr\\variants\\eightanaloginputs"
+  },
+  {
+    "Sourcefile": "e:\\git\\smart-farming\\opt\\station\\.vscode\\bin\\sketch\\station.ino.cpp",
+    "Include": "SPI.h",
+    "Includepath": "C:\\Program Files (x86)\\Arduino\\hardware\\arduino\\avr\\libraries\\SPI\\src"
+  },
+  {
+    "Sourcefile": "e:\\git\\smart-farming\\opt\\station\\.vscode\\bin\\sketch\\station.ino.cpp",
+    "Include": "LoRa.h",
+    "Includepath": "E:\\OneDrive\\pc\\document\\Arduino\\libraries\\LoRa\\src"
+  },
+  {
+    "Sourcefile": "e:\\git\\smart-farming\\opt\\station\\.vscode\\bin\\sketch\\station.ino.cpp",
+    "Include": "Wire.h",
+    "Includepath": "C:\\Program Files (x86)\\Arduino\\hardware\\arduino\\avr\\libraries\\Wire\\src"
+  },
+  {
+    "Sourcefile": "e:\\git\\smart-farming\\opt\\station\\.vscode\\bin\\sketch\\station.ino.cpp",
+    "Include": "",
+    "Includepath": ""
+  },
+  {
+    "Sourcefile": "e:\\git\\smart-farming\\opt\\station\\.vscode\\bin\\sketch\\BME280.cpp",
+    "Include": "",
+    "Includepath": ""
+  },
+  {
+    "Sourcefile": "e:\\git\\smart-farming\\opt\\station\\.vscode\\bin\\sketch\\GY30.cpp",
+    "Include": "",
+    "Includepath": ""
+  },
+  {
+    "Sourcefile": "C:\\Program Files (x86)\\Arduino\\hardware\\arduino\\avr\\libraries\\SPI\\src\\SPI.cpp",
+    "Include": "",
+    "Includepath": ""
+  },
+  {
+    "Sourcefile": "E:\\OneDrive\\pc\\document\\Arduino\\libraries\\LoRa\\src\\LoRa.cpp",
+    "Include": "",
+    "Includepath": ""
+  },
+  {
+    "Sourcefile": "C:\\Program Files (x86)\\Arduino\\hardware\\arduino\\avr\\libraries\\Wire\\src\\Wire.cpp",
+    "Include": "",
+    "Includepath": ""
+  },
+  {
+    "Sourcefile": "C:\\Program Files (x86)\\Arduino\\hardware\\arduino\\avr\\libraries\\Wire\\src\\utility\\twi.c",
+    "Include": "",
+    "Includepath": ""
+  }
+]
