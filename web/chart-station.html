@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html style="height: 100%">
+<head>
+	<meta name="viewport" content="width=device-width,maximum-scale=2">
+	<meta charset="utf-8">
+	<title>Station History</title>
+	<script src="https://cdn.yimian.xyz/dateSelector/dateSelector.js"></script>
+
+</head>
+<body style="height: 100%; margin: 0">
+
+	<h2>Station History</h2>
+	from: <input id="dateFrom" readonly="readonly"> &nbsp; to: <input id="dateTo" readonly="readonly"><br/><br/>
+	<button onclick="window.location.href='https://smartfarm.yimian.xyz/'">Back to Homepage</button>
+	<div class="load">Data Loading...</div>
+	<div class="loaded" id="temperature" style="height: 50%"></div>
+	<div class="loaded" id="humidity" style="height: 50%"></div>
+	<div class="loaded" id="light" style="height: 50%"></div>
+	<div class="loaded" id="batterylevel" style="height: 50%"></div>
+	<div class="loaded" id="nh3" style="height: 50%"></div>
+	<div class="loaded" id="co" style="height: 50%"></div>
+	<div class="loaded" id="airpressure" style="height: 50%"></div>
+	<div class="loaded" id="rainfall" style="height: 50%"></div>
+	<div class="loaded" id="qos" style="height: 50%"></div>
+
+	<script type="text/javascript" src="https://cdn.yimian.xyz/echart/echarts.min.js"></script>
+	<script type="text/javascript" src="https://cdn.yimian.xyz/echart/ecStat.min.js"></script>
+	<script src="https://cdn.yimian.xyz/jquery/jquery.min.js"></script>
+	<script type="text/javascript">
+
+
+		var chart = function(id){
+
+			var o = {};
+
+			o.dom = document.getElementById(id);
+			o.myChart = echarts.init(o.dom);
+			o.app = {};
+			o.option = null;
+			o.base = +new Date(2014, 9, 3);
+			o.oneDay = 24 * 3600 * 1000;
+			o.date = [];
+
+			o.data = [Math.random() * 150];
+			o.now = new Date(o.base);
+
+			o.addData = function(d, c, shift, f = 'push') {
+				o.now = [o.now.getFullYear(), o.now.getMonth() + 1, o.now.getDate()].join('/');
+				o.date[f](d);
+				o.data[f](c);
+
+				if (shift) {
+					o.date.shift();
+					o.data.shift();
+				}
+
+				o.now = new Date(+new Date(o.now) + o.oneDay);
+			}
+
+			o.clearData = function() {
+				o.date = [];
+				o.data = [];
+			}
+
+
+
+			o.pushData = function(){
+				o.data.pop();
+				o.date.pop();
+
+				o.myChart.setOption({
+					toolbox: {
+						left: 'center',
+						feature: {
+							dataZoom: {
+								yAxisIndex: 'none'
+							},
+							restore: {},
+							saveAsImage: {}
+						}
+					},
+					tooltip: {
+						trigger: 'axis'
+					},
+					xAxis: {
+						data: o.date
+					},
+					series: [{
+						name:id,
+						data: o.data,
+						type: 'line',
+					}]
+				});
+			}
+
+			o.option = {
+				title: {
+					text: id
+				},
+				xAxis: {
+					type: 'category',
+					boundaryGap: false,
+					data: o.date
+				},
+				yAxis: {
+					boundaryGap: [0, '50%'],
+					type: 'value'
+				},
+				series: [
+				{
+					name:id,
+					type:'line',
+					smooth:true,
+					symbol: 'none',
+					stack: 'a',
+					areaStyle: {
+						normal: {}
+					},
+					data: o.data
+				}
+				]
+			};
+			if (o.option && typeof o.option === "object") {
+				o.myChart.setOption(o.option, true);
+			}
+
+
+
+			return o;
+
+		}
+
+
+
+		var temp = chart("temperature");
+		var hum = chart("humidity");
+		var light = chart("light");
+		var batterylevel = chart("batterylevel");
+		var co = chart("co");
+		var nh3 = chart("nh3");
+		var qos = chart("qos");
+		var rainfall = chart("rainfall");
+		var air = chart("airpressure");
+
+
+		var pullData = function(){
+
+			$('.load').css('display', 'block');
+			$('.loaded').css('display', 'none');
+
+
+			$.get('https://smartfarm.yimian.xyz/api/get?type=station&timestart='+(new Date(dateFrom.value)).valueOf()/1000+'&timeend='+(new Date(dateTo.value)).valueOf()/1000, function(res){
+
+				temp.clearData();
+				hum.clearData();
+				light.clearData();
+				batterylevel.clearData();
+				co.clearData();
+				nh3.clearData();
+				qos.clearData();
+				rainfall.clearData();
+				air.clearData();
+
+				$('.load').css('display', 'none');
+				$('.loaded').css('display', 'block');
+
+				for(i in res.data){
+					temp.addData(res.data[i].datetime, res.data[i].temperature, false, 'push');
+					hum.addData(res.data[i].datetime, res.data[i].humidity, false, 'push');
+					light.addData(res.data[i].datetime, res.data[i].light, false, 'push');
+					batterylevel.addData(res.data[i].datetime, res.data[i].batterylevel, false, 'push');
+					co.addData(res.data[i].datetime, res.data[i].co, false, 'push');
+					nh3.addData(res.data[i].datetime, res.data[i].nh3, false, 'push');
+					if(res.data[i].qos != -1) qos.addData(res.data[i].datetime, res.data[i].qos, false, 'push');
+					rainfall.addData(res.data[i].datetime, res.data[i].rainfall, false, 'push');
+					air.addData(res.data[i].datetime, res.data[i].airpressure, false, 'push');
+				}
+
+
+				temp.pushData();
+				hum.pushData();
+				light.pushData();
+				batterylevel.pushData();
+				co.pushData();
+				nh3.pushData();
+				qos.pushData();
+				rainfall.pushData();
+				air.pushData();
+
+			});
+
+
+		}
+
+
+
+	</script>
+
+	<script type="text/javascript">
+		var dateFrom = new datePicker(); 
+		var dateTo = new datePicker(); 
+		var date = new Date();
+
+		dateFrom.init({ 
+			'trigger': '#dateFrom', /*按钮选择器，用于触发弹出插件*/ 
+			'type': 'datetime',/*模式：date日期；datetime日期时间；time时间；ym年月；*/ 
+			'minDate':'2019-6-15',/*最小日期*/ 
+			'maxDate':date.getFullYear()+'-'+(date.getMonth()+1)+'-'+date.getDate(),/*最大日期*/ 
+			'cutDays': 1,
+			'onSubmit':function(){/*确认时触发事件*/ 
+				pullData();
+			}, 
+			'onClose':function(){/*取消时触发事件*/ 
+			} 
+		}); 
+		dateTo.init({ 
+			'trigger': '#dateTo', /*按钮选择器，用于触发弹出插件*/ 
+			'type': 'datetime',/*模式：date日期；datetime日期时间；time时间；ym年月；*/ 
+			'minDate':'2019-6-15',/*最小日期*/ 
+			'maxDate':date.getFullYear()+'-'+(date.getMonth()+1)+'-'+date.getDate(),/*最大日期*/ 
+			'cutDays': 0,
+			'onSubmit':function(){/*确认时触发事件*/ 
+
+				pullData();
+			}, 
+			'onClose':function(){/*取消时触发事件*/ 
+			} 
+		}); 
+		pullData();
+	</script>
+
+
+</body>
+</html>

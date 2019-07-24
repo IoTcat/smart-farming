@@ -63,7 +63,7 @@ void getData(String& s, const String& content){
   s += ",\"T\":";
   s += (125*analogRead(A1))>>8;
   s += ",\"h\":";
-  s += analogRead(A0);
+  s += (float)analogRead(A0)/10;
   s += ",\"s\":";
   s += 0;
   s += ",\"q\":";
