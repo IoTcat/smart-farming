@@ -31,12 +31,12 @@
 
 //============================
 //CHANGE THIS FOR EACH ARDUINO
-String nodeId ="Gateway";
+String nodeId ="goodGateway";
 //============================
 
 const char* ssid = "yimian-iot";
 const char* password =  "1234567890.";
-const char* mqtt_server = "192.168.1.102";//change this to the mqtt server
+const char* mqtt_server = "192.168.0.102";//change this to the mqtt server
 
 char* topicIn="#";//change this to the outgoing messages
 String cache_mqtt_publish = "";

@@ -56,7 +56,7 @@ void mqttRes(String subject, String content){
 
 
 void getData(String& s, const String& content){
-  s = "{\"t\":\"node0\",\"b\":";
+  s = "{\"t\":\"node1\",\"b\":";
   s += ((long int)analogRead(A2)*100)/1024;
   s += ",\"w\":";
   s += (analogRead(A3) > 50) ? 0 : 1;
