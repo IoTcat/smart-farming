@@ -1,6 +1,6 @@
 # surf-iots
 Sharing and Record for surf..    
-Details please refer to this [post](https://www.eee.dog/tech/smartfarming-surf/)~
+Details please refer to this [post](https://www.eee.dog/tech/smartfarming-surf.html)~
 ## Design Objetives
 
  - Available
